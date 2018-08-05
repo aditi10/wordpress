@@ -45,5 +45,7 @@ Connect to wordpress
 http://<Ip>/wordpress
 OR
 http://<wordpress-000-d.<public-hosted-zone-name>>/wordpress
+OR
+http://<ELB-Route53-entry>/wordpress
 
 
