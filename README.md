@@ -20,6 +20,7 @@ There are four main modules
 git clone https://github.com/aditi10/wordpress.git
 
 Update values in wp.tpl script which spawns wordpress application
+Required to change parameters:
 Provide dbname, dbpass, dbuser, mysql_host
 The format of mysql_host=mysql-private.<private-dns-hosted-zone>
 
