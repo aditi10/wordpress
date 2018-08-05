@@ -33,9 +33,6 @@ module "wordpress-elb" {
         elb_security_group          = "${module.vpc.elb_sg_id}"
         vpc_id                      = "${module.vpc.vpc_id}"
         subnets                     = "${module.vpc.elb_subnet_id}"
-#        iam_ssl_cert_arn            = "arn:aws:acm:eu-central-1:155106910071:certificate/bc697aec-48a0-443e-bb7e-63f094e918b3"
-#       log_bucket                  = "twiin-staging-alb-logs-us-east-1"
-#       log_bucket_prefix           = "staging"
         origin                      = "Altayyar"
         health_check_target         = "HTTP:80/index.html"
         healthy_threshold_check     = "2"
@@ -47,7 +44,6 @@ module "wordpress-elb" {
         backend_port1               = "80"
         backend_port                = "80"
         backend_protocol            = "http"
-#        acm_ssl_cert_arn            = "arn:aws:acm:eu-central-1:155106910071:certificate/bc697aec-48a0-443e-bb7e-63f094e918b3"
         zone_id_private             = "Z32IWVH5QCFBQX"
         zone_id_public              = "Z2UJYPKK79ACU7"
         instances                   = "${module.wordpress.wordpress_instance_id}"
@@ -60,7 +56,6 @@ module "wordpress-asg" {
         instance_type               = "t2.small"
         ami                         = "ami-759bc50a"
         subnets                     = "${module.vpc.app_subnet_id}"
-#       iam                         = "${module.iam.aws_iam_instance_profile_mediation_server_id}"
         env                         = "test"
         region                      = "us-east-1"
         azs                         = "us-east-1d,us-east-1e"
@@ -75,12 +70,7 @@ module "wordpress-asg" {
         desired_capacity            = "1"
         health_check_grace_period   = "300"
         health_check_type           = "ELB"
-#        wordpress_install           = "${var.wordpress_install}"
-#        load_balancers              = ["${module.elb-tracking.elb_name}"]
-  #elb_name                    = "${module.elb.elb_name}"
         origin                      = "wordress"
-  #target_group_arns           = "${module.alb.admin_target_group,module.alb.accounts_target_group,module.alb.bubbles_target_group,module.alb.communities_target_group,module.alb.content_target_group,module.alb.discovery_target_group,module.alb.photos_target_group,module.alb.profiles_target_group,module.alb.scheduler_target_group}"
-#  target_group_arns           = "${module.alb.all_target_groups}"
 }
 
 
@@ -115,12 +105,7 @@ module "rds" {
         project                         = "altayyar"
         module                          = "mysql"
         zone_id_private                 = "Z32IWVH5QCFBQX"
-#       snapshot_identifier             = "mysql-production-20170413"
-#       final_snapshot_identifier       = "true"
-#       license_model                   = "mysql-license"
         multi_az                        =  "false"
-#       storage_encrypted               = "false"
-#       skip_final_snapshot             = "true"
 }
 
 
@@ -129,22 +114,13 @@ module "wordpress" {
         ami_id                          = "ami-759bc50a"
         az                              = "us-east-1d"
 	az_var                          = "d"
-#	az                              = "d"
         number_instances                = 1
         key_name                        = "CoreOS-K8"
         aws_security_group              = "${module.vpc.wordpress_sg_id}"
-#       vpc_security_group_ids          = ["vpc-d65310b0","vpc-d65310b0"]
         subnet_id                       = "${module.vpc.wordpress_public_subnet_id}"
-#        tag_name                       = "mysql-000"
         instance_type                   = "t2.small"
         instance_name                   = "wordpress"
-#	iam				= "${module.iam.aws_iam_instance_profile_wordpress_id}"
         env                             = "test"
-#        wordpress_install               = "${var.wordpress_install}"
-#        ssh_key_path                    = "${var.ssh_key_path}"
 	zone_id_public			= "Z2UJYPKK79ACU7"
-#	bastion_host                    = "${module.bastion.bastion_public_ip}"
-#        bastion_user                    = "ubuntu"
-#        organization                    = "playwing"
-#        org_validator                   = "aditiwadekar"
+
 } 
